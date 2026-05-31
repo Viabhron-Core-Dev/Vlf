@@ -1,0 +1,47 @@
+when:
+  - event: push
+  - event: manual
+
+steps:
+  - name: build-apk
+    image: alvrme/alpine-android:latest
+    commands:
+      - apk add --no-cache nodejs npm jq
+      - npm install
+      - npm run build
+      # Inject robust Capacitor config with debugging enabled
+      - echo '{"appId":"com.vibeforge.vianhelper","appName":"VibeForge Vian Helper","webDir":"dist","android":{"allowMixedContent":true,"webContentsDebuggingEnabled":true,"captureInput":true}}' > capacitor.config.json
+      - export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+      - yes | sdkmanager --licenses
+      - npx cap add android
+      - npx cap sync
+      - cd android
+      - ./gradlew assembleDebug
+      - cd ..
+      - mkdir -p apk-downloads
+      - cp android/app/build/outputs/apk/debug/app-debug.apk "apk-downloads/app-$(date +'%Y%m%d-%H%M%S').apk"
+
+  - name: debug-token
+    image: alpine
+    environment:
+      TOKEN:
+        from_secret: CI-APK-Pusher
+    commands:
+      - echo "===== TOKEN DEBUG ====="
+      - 'if [ -z "$TOKEN" ]; then echo "❌ TOKEN is EMPTY"; else echo "✅ TOKEN exists (length:$(echo -n "$TOKEN" | wc -c))"; fi'
+      - echo "======================="
+
+  - name: commit-apk
+    image: alpine/git:latest
+    environment:
+      TOKEN:
+        from_secret: CI-APK-Pusher
+    when:
+      branch: main
+      event: [push, manual]
+    commands:
+      - git config --global user.email "ci-bot@vibeforge.local"
+      - git config --global user.name "CI Bot"
+      - git add apk-downloads/
+      - git diff --cached --quiet || git commit -m "Add APK build from CI [skip ci]"
+      - git push https://$TOKEN@codeberg.org/${CI_REPO_OWNER}/${CI_REPO_NAME}.git HEAD:${CI_COMMIT_BRANCH}

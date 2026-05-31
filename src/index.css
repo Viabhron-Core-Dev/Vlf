@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Kalam:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-handwriting: "Kalam", cursive;
+}
+
+@layer base {
+  body {
+    @apply bg-[#EFEBE9] text-[#212121] overflow-x-hidden select-none;
+  }
+}
+
+@layer components {
+  .paper-lines {
+    background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 100% 2.4rem;
+  }
+  
+  .note-shadow {
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+  }
+
+  /* Color Variations for Notes */
+  .nc-white  { @apply bg-[#f5f5f5] text-[#1a1a1a]; }
+  .nc-red    { @apply bg-[#ef4444] text-[#ffffff]; }
+  .nc-orange { @apply bg-[#f97316] text-[#ffffff]; }
+  .nc-yellow { @apply bg-[#eab308] text-[#1a1a1a]; }
+  .nc-green  { @apply bg-[#22c55e] text-[#ffffff]; }
+  .nc-blue   { @apply bg-[#3b82f6] text-[#ffffff]; }
+  .nc-purple { @apply bg-[#a855f7] text-[#ffffff]; }
+  .nc-black  { @apply bg-[#1f2937] text-[#ffffff]; }
+  .nc-gray   { @apply bg-[#9ca3af] text-[#1a1a1a]; }
+
+  .nc-white-border  { @apply border-[#e5e5e0]; }
+  .nc-red-border    { @apply border-[#b91c1c]; }
+  .nc-orange-border { @apply border-[#c2410c]; }
+  .nc-yellow-border { @apply border-[#a16207]; }
+  .nc-green-border  { @apply border-[#15803d]; }
+  .nc-blue-border   { @apply border-[#1d4ed8]; }
+  .nc-purple-border { @apply border-[#7e22ce]; }
+  .nc-black-border  { @apply border-[#111827]; }
+  .nc-gray-border   { @apply border-[#4b5563]; }
+
+  .note-card {
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .note-card:active {
+    transform: scale(0.98);
+  }
+
+  /* Toolbar */
+  .editor-toolbar {
+    @apply flex items-center gap-2 p-2 bg-white/80 backdrop-blur-md border-t border-[#0000001a];
+  }
+
+  /* Utility for hiding scrollbars but keeping functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

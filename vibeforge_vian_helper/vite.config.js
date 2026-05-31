@@ -1,0 +1,58 @@
+import { defineConfig } from 'vite'
+import { VitePWA } from 'vite-plugin-pwa'
+
+export default defineConfig({
+  base: './',
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
+  },
+  plugins: [
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'VibeForge Vian Helper',
+        short_name: 'Vian Helper',
+        description: 'Offline-first personal productivity by VibeForge',
+        start_url: '/VibeForge_Vian_helper/index.html',
+        display: 'standalone',
+        background_color: '#fefce8',
+        theme_color: '#0D9488',
+        icons: [
+          { src: 'icon/icon-72.png', sizes: '72x72', type: 'image/png' },
+          { src: 'icon/icon-96.png', sizes: '96x96', type: 'image/png' },
+          { src: 'icon/icon-128.png', sizes: '128x128', type: 'image/png' },
+          { src: 'icon/icon-144.png', sizes: '144x144', type: 'image/png' },
+          { src: 'icon/icon-152.png', sizes: '152x152', type: 'image/png' },
+          { src: 'icon/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'icon/icon-384.png', sizes: '384x384', type: 'image/png' },
+          { src: 'icon/icon-512.png', sizes: '512x512', type: 'image/png' }
+        ]
+      },
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,png,svg,ico,json}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-cache',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365
+              }
+            }
+          }
+        ]
+      },
+      devOptions: {
+        enabled: false
+      }
+    })
+  ]
+})

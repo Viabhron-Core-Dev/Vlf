@@ -1,0 +1,193 @@
+{
+  "entities": {
+    "Note": {
+      "title": "Note",
+      "description": "A personal note or checklist item.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "type": { "enum": ["text", "checklist"] },
+        "color": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "modifiedAt": { "type": "number" },
+        "archived": { "type": "boolean" },
+        "deleted": { "type": "boolean" },
+        "deletedAt": { "type": "number" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "reminder": { "type": "string" },
+        "items": { "type": "array", "items": { "$ref": "ChecklistItem" } },
+        "attachments": { "type": "array", "items": { "$ref": "Attachment" } }
+      },
+      "required": ["title", "type", "color", "createdAt", "modifiedAt", "archived", "deleted", "tags"]
+    },
+    "Attachment": {
+      "title": "Attachment",
+      "description": "An attachment to a note or journal entry.",
+      "type": "object",
+      "properties": {
+        "type": { "enum": ["image", "drawing", "table"] },
+        "data": { "type": "string" },
+        "name": { "type": "string" },
+        "headers": { "type": "array", "items": { "type": "string" } },
+        "tableData": { "type": "array", "items": { "type": "array", "items": { "type": "string" } } }
+      }
+    },
+    "ChecklistItem": {
+      "title": "ChecklistItem",
+      "description": "An item in a checklist note.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "text": { "type": "string" },
+        "done": { "type": "boolean" }
+      },
+      "required": ["id", "text", "done"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "A single expense item.",
+      "type": "object",
+      "properties": {
+        "instanceId": { "type": "number" },
+        "item": { "type": "string" },
+        "category": { "type": "string" },
+        "subcategory": { "type": "string" },
+        "price": { "type": "number" },
+        "weight_label": { "type": "string" },
+        "weight_kg": { "type": "number" },
+        "shop": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "comments": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["item", "category", "subcategory", "price", "weight_label", "weight_kg", "shop", "date", "createdAt"]
+    },
+    "ExpenseInstance": {
+      "title": "ExpenseInstance",
+      "description": "A grouping of expenses (e.g., an outing).",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "shop": { "type": "string" },
+        "total": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["name", "date", "total", "createdAt"]
+    },
+    "Habit": {
+      "title": "Habit",
+      "description": "A habit to track.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "icon": { "type": "string" },
+        "color": { "type": "string" },
+        "type": { "enum": ["yesno", "measurable", "combination"] },
+        "frequency": { "enum": ["daily", "weekly"] },
+        "unit": { "type": "string" },
+        "target": { "type": "number" },
+        "subHabits": { "type": "array", "items": { "$ref": "SubHabit" } },
+        "order": { "type": "number" },
+        "archived": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["name", "icon", "color", "type", "frequency", "order", "archived", "createdAt"]
+    },
+    "SubHabit": {
+      "title": "SubHabit",
+      "description": "A sub-habit for combination habits.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "enum": ["yesno", "measurable"] },
+        "unit": { "type": "string" },
+        "target": { "type": "number" }
+      },
+      "required": ["name", "type"]
+    },
+    "HabitRecord": {
+      "title": "HabitRecord",
+      "description": "A daily record for a habit.",
+      "type": "object",
+      "properties": {
+        "habitId": { "type": "number" },
+        "date": { "type": "string", "format": "date" },
+        "habitDate": { "type": "string" },
+        "value": { "type": "number" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["habitId", "date", "habitDate", "value", "createdAt"]
+    },
+    "JournalEntry": {
+      "title": "JournalEntry",
+      "description": "A journal entry with emotions.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "emotion": { "type": "string" },
+        "color": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "modifiedAt": { "type": "number" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "attachments": { "type": "array", "items": { "$ref": "Attachment" } },
+        "lastOpenedAt": { "type": "number" }
+      },
+      "required": ["title", "body", "date", "emotion", "color", "createdAt", "modifiedAt", "tags"]
+    },
+    "VianEvent": {
+      "title": "VianEvent",
+      "description": "An event or reminder in the calendar.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "date": { "type": "string", "format": "date" },
+        "time": { "type": "string" },
+        "endTime": { "type": "string" },
+        "location": { "type": "string" },
+        "color": { "type": "string" },
+        "body": { "type": "string" },
+        "icon": { "type": "string" },
+        "type": { "enum": ["plan", "event"] },
+        "reminder": { "type": "string" },
+        "repeat": { "type": "string" },
+        "archived": { "type": "boolean" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["title", "date", "time", "repeat", "archived", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/notes/{noteId}": {
+      "schema": "Note",
+      "description": "Collection of personal notes."
+    },
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Collection of individual expenses."
+    },
+    "/expense_instances/{instanceId}": {
+      "schema": "ExpenseInstance",
+      "description": "Collection of expense groups (outings)."
+    },
+    "/habits/{habitId}": {
+      "schema": "Habit",
+      "description": "Collection of tracked habits."
+    },
+    "/habit_records/{recordId}": {
+      "schema": "HabitRecord",
+      "description": "Collection of habit completion records."
+    },
+    "/journal/{journalId}": {
+      "schema": "JournalEntry",
+      "description": "Collection of personal journal entries."
+    },
+    "/events/{eventId}": {
+      "schema": "VianEvent",
+      "description": "Collection of calendar events and reminders."
+    }
+  }
+}
