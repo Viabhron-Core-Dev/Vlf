@@ -40,4 +40,4 @@
 - Added a GitHub Actions workflow (`build-android.yml`) utilizing Capacitor to ensure a debug APK is automatically compiled whenever the repository is exported to GitHub. Updated workflow to trigger on pushes to all branches (`**`) instead of just `main`.
 - Initialized Capacitor and generated the `android` platform locally within the project space. This resolves GitHub Actions build compilation issues missing configuration setups. Simplified `build-android.yml` to run Capacitor sync on the existing configuration instead.
 - Updated `build-android.yml` to use Node.js version 22 to satisfy Capacitor CLI requirements.
-- Updated `build-android.yml` to execute `gradle wrapper` directly on the runner before assembly to cleanly regenerate the corrupt `gradle-wrapper.jar` binary file caused by Git line-ending conversions.
+- Updated `build-android.yml` to utilize the official `gradle/actions/setup-gradle` GitHub Action rather than relying on the local wrapper (`gradlew`). This completely bypasses `gradle-wrapper.jar` corruption issues caused by Git line-ending conversions, ensuring reliable Android APK builds.
