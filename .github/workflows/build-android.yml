@@ -27,9 +27,6 @@ jobs:
 
       - name: Setup Capacitor
         run: |
-          npm install @capacitor/cli @capacitor/core @capacitor/android
-          npx cap init "Vian Life Helper" "com.vian.vlf" --web-dir dist
-          npx cap add android
           npx cap sync android
 
       - name: Setup Java JDK
@@ -37,9 +34,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '17'
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
 
       - name: Build Debug APK
         working-directory: android

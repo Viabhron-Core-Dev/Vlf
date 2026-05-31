@@ -38,3 +38,4 @@
 - Extensively re-skinned the Expenses `AddOutingOverlay` and `AddItemModal` to match the exact `bg-[#f0f2f5]` / plain white dialog styles used in Notes and Habits. Preserved the custom "tap and dropdown options below tap" functionality but transitioned the color palette from dark/cream to clean gray-and-white.
 - Renamed the application metadata and HTML wrapper title to "Vian Life Helper" (VLF) per user request.
 - Added a GitHub Actions workflow (`build-android.yml`) utilizing Capacitor to ensure a debug APK is automatically compiled whenever the repository is exported to GitHub. Updated workflow to trigger on pushes to all branches (`**`) instead of just `main`.
+- Initialized Capacitor and generated the `android` platform locally within the project space. This resolves GitHub Actions build compilation issues missing configuration setups. Simplified `build-android.yml` to run Capacitor sync on the existing configuration instead.
