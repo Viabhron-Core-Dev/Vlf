@@ -37,3 +37,4 @@
 - Redesigned the `ExpensesTab` addition interface to match the clean, simple, light-theme design language of the Notes and Habits tabs. Replaced custom dropdowns and dark aesthetics with standard lightweight native layouts and high-contrast styling.
 - Extensively re-skinned the Expenses `AddOutingOverlay` and `AddItemModal` to match the exact `bg-[#f0f2f5]` / plain white dialog styles used in Notes and Habits. Preserved the custom "tap and dropdown options below tap" functionality but transitioned the color palette from dark/cream to clean gray-and-white.
 - Renamed the application metadata and HTML wrapper title to "Vian Life Helper" (VLF) per user request.
+- Added a GitHub Actions workflow (`build-android.yml`) utilizing Capacitor to ensure a debug APK is automatically compiled whenever the repository is exported to GitHub.
