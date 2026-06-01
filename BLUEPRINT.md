@@ -41,3 +41,4 @@
 - Initialized Capacitor and generated the `android` platform locally within the project space. This resolves GitHub Actions build compilation issues missing configuration setups. Simplified `build-android.yml` to run Capacitor sync on the existing configuration instead.
 - Updated `build-android.yml` to use Node.js version 22 to satisfy Capacitor CLI requirements.
 - Updated `build-android.yml` to utilize the official `gradle/actions/setup-gradle` GitHub Action rather than relying on the local wrapper (`gradlew`). This completely bypasses `gradle-wrapper.jar` corruption issues caused by Git line-ending conversions, ensuring reliable Android APK builds.
+- Updated `build-android.yml` to configure Java 21 instead of Java 17 to successfully compile Capacitor `android` module dependencies utilizing Gradle 8.14.3.
